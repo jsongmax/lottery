@@ -1,0 +1,40 @@
+# 前端构建及依赖
+frontend/node_modules/
+frontend/dist/
+frontend/.npm/
+
+# 后端构建及生成的二进制程序
+backend/lottery-backend
+backend/lottery-backend.exe
+backend/lottery-backend-arm64
+backend/.air
+backend/.air.toml
+
+# 数据库文件 (不要把抽奖真实数据泄露或覆盖到 git 中)
+backend/lottery.db
+*.db
+*.sqlite
+*.sqlite3
+
+# 环境配置及日志
+.env
+.env.local
+*.log
+
+# 操作系统自动生成的隐藏文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE 与编辑器目录
+.vscode/
+.idea/
+*.swp
+
+# AI Agent 历史与状态配置 (如 Cursor 等插件)
+.agent/
+.agents/
+_agent/
+_agents/
+.gemini/
+.claude/
