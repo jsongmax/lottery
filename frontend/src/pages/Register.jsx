@@ -18,6 +18,11 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
     const [displayName, setDisplayName] = useState('');
 
+    // 隐藏彩蛋状态：连续点击 5 次触发隐藏身份
+    const [clickCount, setClickCount] = useState(0);
+    const [lastClickTime, setLastClickTime] = useState(0);
+    const [showHidden, setShowHidden] = useState(false);
+
     // 从 URL 读取 event_id
     const params = new URLSearchParams(window.location.search);
     const eventId = params.get('event_id');
@@ -138,12 +143,31 @@ export default function Register() {
         );
     }
 
+    const handleHeaderClick = () => {
+        const now = Date.now();
+        // 两次点击间隔小于 1 秒视为连续点击
+        if (now - lastClickTime < 1000) {
+            const newCount = clickCount + 1;
+            setClickCount(newCount);
+            if (newCount >= 4) { // 加上第一次共 5 次
+                setShowHidden(true);
+            }
+        } else {
+            // 否则重置计数
+            setClickCount(1);
+        }
+        setLastClickTime(now);
+    };
+
+    // 动态选项，合并了原 identities 数组的内容
+    const displayIdentities = showHidden ? ['新郎', '新娘', ...identities] : identities;
+
     return (
         <div className="register-page">
             <div className="register-card">
-                <div className="register-header">
+                <div className="register-header" onClick={handleHeaderClick} style={{ cursor: 'pointer' }}>
                     <Sparkles className="header-icon" size={20} />
-                    <h1>婚礼幸运抽奖</h1>
+                    <h1 style={{ userSelect: 'none' }}>婚礼幸运抽奖</h1>
                     <Sparkles className="header-icon" size={20} />
                 </div>
                 <p className="register-subtitle">WEDDING LUCKY DRAW</p>
@@ -171,11 +195,11 @@ export default function Register() {
                     <div className="form-group">
                         <label>您的身份</label>
                         <div className="identity-grid">
-                            {identities.map((id) => (
+                            {displayIdentities.map((id) => (
                                 <button
                                     key={id}
                                     type="button"
-                                    className={`identity-btn ${identity === id ? 'active' : ''}`}
+                                    className={`identity-btn ${identity === id ? 'active' : ''} ${showHidden && (id === '新郎' || id === '新娘') ? 'special-identity' : ''}`}
                                     onClick={() => setIdentity(id)}
                                 >
                                     {id}

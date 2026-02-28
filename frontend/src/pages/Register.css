@@ -108,6 +108,21 @@
   box-shadow: 0 2px 8px rgba(212, 165, 116, 0.2);
 }
 
+.special-identity {
+  border-color: #FDA4AF !important;
+  color: #E11D48 !important;
+  font-weight: bold;
+}
+
+.special-identity:hover {
+  background: #FFF0F2 !important;
+}
+
+.special-identity.active {
+  background: linear-gradient(135deg, #FFE4E6, #FFF0F2) !important;
+  box-shadow: 0 2px 8px rgba(253, 164, 175, 0.3) !important;
+}
+
 .avatar-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
